@@ -1,0 +1,25 @@
+[
+    {
+        "schema": "\nCREATE TABLE Employee (\n    EmployeeId INTEGER PRIMARY KEY,\n    LastName NVARCHAR(20),\n    FirstName NVARCHAR(20),\n    Title NVARCHAR(30),\n    ReportsTo INTEGER,\n    FOREIGN KEY (ReportsTo) REFERENCES Employee(EmployeeId))\n"
+    },
+    {
+        "user_query": "Count of employees by job title",
+        "sql_query": "SELECT Title AS JobTitle, COUNT(EmployeeId) AS NumberOfEmployees FROM Employee GROUP BY Title"
+    },
+    {
+        "user_query": "List all employees with their managers' names",
+        "sql_query": "WITH Manager AS (\n    SELECT EmployeeId, LastName, FirstName\n    FROM Employee\n)\nSELECT e.LastName AS EmployeeLastName, e.FirstName AS EmployeeFirstName, m.FirstName AS ManagerFirstName, m.LastName AS ManagerLastName\nFROM Employee e\nLEFT JOIN Manager m ON e.ReportsTo = m.EmployeeId"
+    },
+    {
+        "user_query": "Count of employees by job title",
+        "sql_query": "SELECT Title AS JobTitle, COUNT(EmployeeId) AS EmployeeCount FROM Employee GROUP BY Title"
+    },
+    {
+        "user_query": "Find employees without direct reports (leaf nodes)",
+        "sql_query": "WITH RecursiveEmployeeCTE AS (\n    SELECT EmployeeId, ReportsTo\n    FROM Employee\n    UNION ALL\n    SELECT e.EmployeeId, e.ReportsTo\n    FROM Employee e\n    INNER JOIN RecursiveEmployeeCTE r ON e.EmployeeId = r.ReportsTo\n)\nSELECT e.EmployeeId AS 'Employee ID', e.FirstName AS 'First Name', e.LastName AS 'Last Name'\nFROM Employee e\nLEFT JOIN RecursiveEmployeeCTE r ON e.EmployeeId = r.ReportsTo\nWHERE r.EmployeeId IS NULL\n;"
+    },
+    {
+        "user_query": "Show employees with 'Manager' in their title",
+        "sql_query": "SELECT EmployeeId as Employee_ID, LastName as Last_Name, FirstName as First_Name, Title as Job_Title FROM Employee WHERE Title LIKE '%Manager%';"
+    }
+]
