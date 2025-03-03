@@ -1,22 +1,28 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export default function SidebarApp() {
+  const [selected, setSelected] = useState(null);
 
-const app = express();
-const PORT = process.env.PORT || 8080;
+  const handleClick = (section) => {
+    setSelected(section);
+  };
 
-// Serve the static React build files
-app.use(express.static(path.join(__dirname, "build")));
+  return (
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <div className="w-1/5 bg-gray-800 text-white p-4 space-y-4">
+        <Button onClick={() => handleClick("Connectors")}>Connectors</Button>
+        <Button onClick={() => handleClick("Mapping/Matching")}>Mapping/Matching</Button>
+        <Button onClick={() => handleClick("Report Repo")}>Report Repo</Button>
+      </div>
 
-// Catch-all route to serve React index.html
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT} or on Azure App Service`);
-});
+      {/* Main Content */}
+      <div className="flex-1 p-6">
+        {selected === "Connectors" && <h1>Connectors to GCP BigQuery/Cloud SQL</h1>}
+        {selected === "Mapping/Matching" && <h1>Mapping/Matching Feature</h1>}
+        {selected === "Report Repo" && <h1>Standard/Custom Reports</h1>}
+      </div>
+    </div>
+  );
+}
