@@ -1,9 +1,0 @@
-openai
-langchain
-langchain-community
-langchain-openai
-mysql-connector-python
-pandas
-ipykernel
-psycopg2-binary
-psycopg2
