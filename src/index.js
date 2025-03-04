@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button"; // Adjust based on the file structure
 
 export default function SidebarApp() {
   const [selected, setSelected] = useState(null);
