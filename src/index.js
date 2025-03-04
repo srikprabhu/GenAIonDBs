@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../components/ui/button"; // Adjust based on the file structure
 
-export default function SidebarApp() {
+export default function index() {
   const [selected, setSelected] = useState(null);
 
   const handleClick = (section) => {
