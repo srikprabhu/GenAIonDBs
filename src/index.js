@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "./Button"; // Adjust based on the file structure
 
-export default function index() {
+export default function Index() {
   const [selected, setSelected] = useState(null);
 
   const handleClick = (section) => {
